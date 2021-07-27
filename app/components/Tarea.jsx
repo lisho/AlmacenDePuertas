@@ -1,12 +1,18 @@
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 import { useState } from "react";
 
-const Tarea = ({ tarea }) => {
+const Tarea = ({ tarea, tareas, setTareas }) => {
 
     const [isTruncated, setIsTruncated] = useState(true)
 
     const handleVer = () => {
         setIsTruncated(!isTruncated)
+    }
+
+    const handleBorrar = (tareaId) => {
+        const nuevasTareas = tareas.filter(t => tareaId !== t.id);
+        setTareas(nuevasTareas);
+        
     }
 
     return (
@@ -17,11 +23,19 @@ const Tarea = ({ tarea }) => {
                     : <Text fontSize="md" >{tarea.description}</Text>
             }
 
-            <Button colorScheme="teal" size="sm" m="2px">Borrar</Button>
+            <Button colorScheme="teal" 
+                    size="sm" 
+                    m="2px"
+                    onClick = {() => handleBorrar(tarea.id)}
+            >
+                Borrar
+            </Button>
+
             <Button colorScheme="teal"
                 size="sm"
                 m="2px"
-                onClick={() => handleVer()}>
+                onClick={() => handleVer()}
+            >
                 {isTruncated ? "Ver todo" : "Ocultar"}
             </Button>
         </Box>

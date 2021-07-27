@@ -29,6 +29,8 @@ const Tareas = () => {
 
                         <Tarea
                             tarea={tarea}
+                            tareas={tareas}
+                            setTareas={setTareas}
                         />
 
                     </ListItem>
