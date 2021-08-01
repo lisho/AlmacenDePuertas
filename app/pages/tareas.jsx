@@ -10,33 +10,22 @@ import FormularioTarea from "../components/FormularioTarea";
 import Tarea from "../components/Tarea";
 import useIsMounted from 'react-is-mounted-hook';
 import { usePaginaActivaContext } from "../components/contextos/PaginaActivaProvider"
-
-const tareasIniciales = [
-  {
-    id: 1,
-    title: "Tarea 1",
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores, voluptates nemo impedit maiores excepturi rem voluptate doloribus possimus sint hic non incidunt nesciunt dicta consequatur mollitia, aliquid ab debitis",
-  },
-  {
-    id: 2,
-    title: "Tarea 2",
-    description:
-      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores, voluptates nemo impedit maiores excepturi rem voluptate doloribus possimus sint hic non incidunt nesciunt dicta consequatur mollitia, aliquid ab debitis",
-  },
-];
+import crearNuevoElementoEnBd from "../helpers/crearNuevoElementoEnBD";
+import editarElementoEnBd from "../helpers/editarElementoEnBD";
+import borrarElementoEnBd from "../helpers/borrarElementoEnBD";
 
 const valoresIniciales = {
-  id: "",
-  title:"",
-  description:""
+  id: null,
+  tarea:"",
+  descripcion:""
   }
 
 
 const Tareas = () => {
 
-  const [tareas, setTareas] = useState(tareasIniciales); // Array de todas las tareas
+  const [tareas, setTareas] = useState([]); // Array de todas las tareas
   const [tareaParaEditar, setTareaParaEditar] = useState(null); // Se llena cuando hay una tarea para editar
+  
   const { isOpen, onOpen, onClose } = useDisclosure(); // Manejador del modal
   const [formValues, setFormValues] = useState(valoresIniciales)
   const isMounted = useIsMounted();
@@ -46,6 +35,17 @@ const Tareas = () => {
     isMounted && setBotonActivado("Tareas")
    
   }, [isMounted]) 
+
+
+  useEffect(() => {
+    fetch('http://0.0.0.0:3030/api/tareas')
+      .then(response => response.json())
+      .then(data => {
+        setTareas(data)
+        console.log(data)
+      });
+    
+  }, [])
 
   /* Función para AÑADIR una nueva tarea 
   ** @ param: Objeto tarea
@@ -58,13 +58,14 @@ const Tareas = () => {
      const nuevaTarea = {
       
       ...tarea,
-      id: Date.now()+Math.floor(Math.random()),
+      /* id: Date.now()+Math.floor(Math.random()), */
     }; 
    
     console.log(nuevaTarea)
     const tareasCambiadas = [nuevaTarea, ...tareas];
-
-    setTareas(tareasCambiadas);
+    crearNuevoElementoEnBd("http://0.0.0.0:3030/api/tareas", nuevaTarea, setTareas, tareas);
+   
+    /* setTareas(tareasCambiadas); */
     onClose();
   };
 
@@ -78,14 +79,21 @@ const Tareas = () => {
 
   const handleEditar = (tareaEditada) => {
       
-    const tareasCambiadas = tareas.map((tarea) =>
+    /*  const tareasCambiadas = tareas.map((tarea) =>
       tarea.id === tareaEditada.id ? tareaEditada : tarea
-    );
+    );  */
 
-    setTareas(tareasCambiadas);
+    editarElementoEnBd("http://0.0.0.0:3030/api/tareas/"+tareaEditada.id, tareaEditada, setTareas);
+
+    /* setTareas(tareasCambiadas); */
     setTareaParaEditar(null);
     onClose();
   };
+
+  const handleBorrar = (tareaParaBorrar) => {
+  
+      borrarElementoEnBd("http://0.0.0.0:3030/api/tareas/"+tareaParaBorrar.id, setTareas);
+  }
 
   const abrirModal = () => {
     setFormValues(valoresIniciales)
@@ -111,6 +119,7 @@ const Tareas = () => {
       </Heading>
 
       <List spacing={3}>
+        {console.log(tareas)}
         {tareas.map((tarea) => (
           <ListItem key={tarea.id}>
             <Tarea
@@ -118,6 +127,7 @@ const Tareas = () => {
               tareas={tareas}
               setTareas={setTareas}
               setTareaParaEditar={setTareaParaEditar}
+              handleBorrar = {handleBorrar}
               onOpen={onOpen}
             />
           </ListItem>

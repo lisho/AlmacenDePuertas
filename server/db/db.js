@@ -2,7 +2,7 @@ const {Sequelize} = require('sequelize');
 const { applyExtraSetup } = require('./asociacionesDeModelos');
 
 /* Traemos los modelos (modelo = tabla) */
- const CiudadanoModel = require("../models/ciudadanos");
+ /* const CiudadanoModel = require("../models/ciudadanos");
  const ApoyoModel = require("../models/apoyos");
  const CitaModel = require("../models/citas");
  const EstadoCitaModel = require("../models/estados_cita");
@@ -12,8 +12,8 @@ const { applyExtraSetup } = require('./asociacionesDeModelos');
  const PuntoAtencionrModel = require("../models/puntos_atencion");
  const SesionModel = require("../models/sesiones");
  const TipoApoyoModel = require("../models/tipos_apoyo");
- const UserModel = require("../models/users");
- 
+ const UserModel = require("../models/users"); */
+ const TareasModel = require("../models/tareas");
 
 /* Creamos la base de datos
     Parametros de Sequalize: nombre de la bd, usuario, contraseña y un objeto con:
@@ -27,7 +27,7 @@ const sequelize = new Sequelize ("almacen", "lisho", "toor", {
 
 /* Creamos las tablas */
 
-const Ciudadano = CiudadanoModel(sequelize, Sequelize);
+/* const Ciudadano = CiudadanoModel(sequelize, Sequelize);
 const Apoyo = ApoyoModel(sequelize, Sequelize);
 const Cita = CitaModel(sequelize, Sequelize);
 const EstadoCita = EstadoCitaModel(sequelize, Sequelize);
@@ -37,16 +37,17 @@ const PerfilUsuario = PerfilesUsuarioModel(sequelize, Sequelize);
 const PuntoAtencion = PuntoAtencionrModel(sequelize, Sequelize);
 const Sesion = SesionModel(sequelize, Sequelize);
 const TipoApoyo = TipoApoyoModel(sequelize, Sequelize);
-const User = UserModel(sequelize, Sequelize);
+const User = UserModel(sequelize, Sequelize); */
+const Tareas = TareasModel(sequelize, Sequelize);
 
 
 /* Establecemos las relaciones entre las tablas */
 
-applyExtraSetup(sequelize);
+// applyExtraSetup(sequelize);
 
 /* Sincronizamos las tablas con la base de datos (y devuelve una promesa)*/
 
-sequelize.sync({force: true})
+sequelize.sync({force: false})
     .then(()=> {
         console.log("Tablas sincronizadas")
     })
@@ -54,5 +55,4 @@ sequelize.sync({force: true})
  /* Exportamos los objetos que vamos a necesitar */   
 
  module.exports = {
-     Ciudadano, Apoyo, Cita, EstadoCita, Participacion, PerfilProfesional, PerfilUsuario, PuntoAtencion, Sesion, TipoApoyo, User
- }
+    sequelize, Tareas }

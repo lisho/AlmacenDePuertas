@@ -12,8 +12,7 @@ import {
     Input,
     Button,
     useOutsideClick
-  } from "@chakra-ui/react"
-
+  } from "@chakra-ui/react";
 
 const FormularioTarea = ({ isOpen, onOpen, onClose, 
                             handleAdd, handleEditar, 
@@ -22,15 +21,8 @@ const FormularioTarea = ({ isOpen, onOpen, onClose,
  
     const initialRef = useRef()
     
-    const {title, description} = formValues;
+    const {tarea, descripcion} = formValues;
 
-    /* Manejamos el click fiera del modal de edicion para borrar los campos del formulario */
-/*     useOutsideClick({
-        ref: initialRef,
-        handler: () => setFormValues(valoresIniciales)
-      }) */
-    
-    
     const handleInputChange = (e) => {
         const changedFormValues = {
             ...formValues,
@@ -41,9 +33,15 @@ const FormularioTarea = ({ isOpen, onOpen, onClose,
     };
 
     const handleSubmit = () => {
-        tareaParaEditar 
+        /* tareaParaEditar 
         ? handleEditar(formValues)
-        : handleAdd (formValues);
+        : handleAdd (formValues); */
+        if (tareaParaEditar) {
+            handleEditar(formValues);
+        } else {
+            
+            handleAdd(formValues)
+        }
         console.log("Nueva tarea enviada...")
         setFormValues(valoresIniciales);
         
@@ -77,12 +75,12 @@ const FormularioTarea = ({ isOpen, onOpen, onClose,
                 <ModalBody pb={6}>
                     <FormControl>
                     <FormLabel>Nombre de la tarea</FormLabel>
-                    <Input ref={initialRef} placeholder="Tarea" value={title} name="title" onChange={(e) => handleInputChange(e)}/>
+                    <Input ref={initialRef} placeholder="Tarea" value={tarea} name="tarea" onChange={(e) => handleInputChange(e)}/>
                     </FormControl>
         
                     <FormControl mt={4}>
                     <FormLabel>Deacripción</FormLabel>
-                    <Input placeholder="Descripción" name="description" value={description} onChange={(e) => handleInputChange(e)}/>
+                    <Input placeholder="Descripción" name="descripcion" value={descripcion} onChange={(e) => handleInputChange(e)}/>
                     </FormControl>
                 </ModalBody>
         
