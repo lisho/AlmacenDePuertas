@@ -4,10 +4,13 @@ import {
   Button,
   Heading,
   useDisclosure,
+  Icon,
+  Text,
 } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import { useEffect, useState,useContext } from "react";
 import FormularioTarea from "../components/FormularioTarea";
-import Tarea from "../components/Tarea";
+import Tarea from "../components/TareaItem";
 import useIsMounted from 'react-is-mounted-hook';
 import { usePaginaActivaContext } from "../components/contextos/PaginaActivaProvider"
 import crearNuevoElementoEnBd from "../helpers/crearNuevoElementoEnBD";
@@ -58,14 +61,11 @@ const Tareas = () => {
      const nuevaTarea = {
       
       ...tarea,
-      /* id: Date.now()+Math.floor(Math.random()), */
     }; 
    
     console.log(nuevaTarea)
-    const tareasCambiadas = [nuevaTarea, ...tareas];
+    
     crearNuevoElementoEnBd("http://0.0.0.0:3030/api/tareas", nuevaTarea, setTareas, tareas);
-   
-    /* setTareas(tareasCambiadas); */
     onClose();
   };
 
@@ -103,19 +103,26 @@ const Tareas = () => {
   return (
     <>
       <Heading as="h1" m="15px" size="xl">
-          App de Tareas
+          Tareas
       </Heading>
-      <Heading as="h3" m="15px" size="md">
-        Mis tareas pendientes
-        <Button
-          p="5px"
+      <Button
+          p="10px"
           ml="10px"
           bg="teal.400"
           color="white"
           onClick={() => abrirModal()}
         >
-          +
+          <Icon
+                as={AddIcon}
+                fontSize="xl"
+                color="white"
+            /> 
+            <Text ml={5} display="flex">
+                  nueva tarea
+                </Text>
         </Button>
+      <Heading as="h3" m="15px" size="md">
+        Todas las tareas pendientes
       </Heading>
 
       <List spacing={3}>

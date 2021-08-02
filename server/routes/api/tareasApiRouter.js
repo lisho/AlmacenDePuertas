@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const {sequelize} = require('../../db/db')
 
-const {Tareas} = require('../../db/db')
+const {Tarea} = require('../../db/db')
 
 router.get('/', async (req, res) => {
     try {
@@ -11,30 +11,30 @@ router.get('/', async (req, res) => {
       } catch (error) {
         console.error('Unable to connect to the database:', error);
       }
-    const tareas = await Tareas.findAll();
+    const tareas = await Tarea.findAll();
     res.json(tareas)
 })
 
 router.post('/', async (req, res) => {
-  const tarea = await Tareas.create(req.body)
+  const tarea = await Tarea.create(req.body)
   res.json(tarea)
 })
 
 router.put('/:tareaId', async (req, res) => {
-  await Tareas.update(req.body, {
+  await Tarea.update(req.body, {
     where: {id: req.params.tareaId}
   })
   // Aqui es mejor devolver solo la entrada modificada??
-  const tareas = await Tareas.findAll();
+  const tareas = await Tarea.findAll();
   res.json(tareas)
 })
 
 router.delete('/:tareaId', async (req, res) => {
   console.log("Peticion de borrado", req)
-  await Tareas.destroy({
+  await Tarea.destroy({
     where: {id: req.params.tareaId}
   })
-  const tareas = await Tareas.findAll();
+  const tareas = await Tarea.findAll();
   res.json(tareas)
 })
 

@@ -6,9 +6,6 @@ import { usePaginaActivaContext } from "../../components/contextos/PaginaActivaP
 const SidebarItem = ({
   icon,
   title,
-  description,
-  active,
-  navSize,
   page,
   onClose,
 }) => {
@@ -41,22 +38,22 @@ const SidebarItem = ({
                 <Icon
                   as={icon}
                   fontSize="xl"
-                  color={active ? "#82AAAD" : "gray.500"}
+                  color= "gray.500"
                 />
-                <Text ml={5} display={navSize == "small" ? "none" : "flex"}>
+                <Text ml={5} display= "flex">
                   {title}
                 </Text>
               </Flex>
             </MenuButton>{" "}
           </a>
         </Link>
-        <MenuList py={0} border="none" w={200} h={200} ml={5}>
+       {/*  <MenuList py={0} border="none" w={200} h={200} ml={5}>
           <SidebarItemHoverEffect
             title={title}
             icon={icon}
             description={description}
           />
-        </MenuList>
+        </MenuList> */}
       </Menu>
     </Flex>
   );

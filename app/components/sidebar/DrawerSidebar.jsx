@@ -13,7 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import SidebarItem from "./SidebarItem";
-import { FiHome, FiTrello } from "react-icons/fi";
+import { FiHome, FiTrello, FiUsers } from "react-icons/fi";
+import SidebarFooter from "./SidebarFooter";
 
 const DrawerSidebar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,11 +59,12 @@ const DrawerSidebar = () => {
          
             <SidebarItem page="/" navSize="large" icon={FiHome } title="Home" onClose={onClose}/>
             <SidebarItem page="/tareas" navSize="large" icon={FiTrello } title="Tareas" onClose={onClose} />
+            <SidebarItem page="/usuarios" navSize="large" icon={FiUsers } title="Usuarios" onClose={onClose} />
 
           </DrawerBody>
 
           <DrawerFooter>
-            <div>Este es el pie</div>
+            <SidebarFooter />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

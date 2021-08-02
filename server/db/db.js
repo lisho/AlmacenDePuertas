@@ -11,9 +11,9 @@ const { applyExtraSetup } = require('./asociacionesDeModelos');
  const PerfilesUsuarioModel = require("../models/perfiles_usuario");
  const PuntoAtencionrModel = require("../models/puntos_atencion");
  const SesionModel = require("../models/sesiones");
- const TipoApoyoModel = require("../models/tipos_apoyo");
- const UserModel = require("../models/users"); */
- const TareasModel = require("../models/tareas");
+ const TipoApoyoModel = require("../models/tipos_apoyo");*/
+ const UserModel = require("../models/users"); 
+ const TareaModel = require("../models/tareas");
 
 /* Creamos la base de datos
     Parametros de Sequalize: nombre de la bd, usuario, contraseña y un objeto con:
@@ -36,9 +36,9 @@ const PerfilProfesional = PerfilesProfesionalModel(sequelize, Sequelize);
 const PerfilUsuario = PerfilesUsuarioModel(sequelize, Sequelize);
 const PuntoAtencion = PuntoAtencionrModel(sequelize, Sequelize);
 const Sesion = SesionModel(sequelize, Sequelize);
-const TipoApoyo = TipoApoyoModel(sequelize, Sequelize);
-const User = UserModel(sequelize, Sequelize); */
-const Tareas = TareasModel(sequelize, Sequelize);
+const TipoApoyo = TipoApoyoModel(sequelize, Sequelize);*/
+const User = UserModel(sequelize, Sequelize); 
+const Tarea = TareaModel(sequelize, Sequelize);
 
 
 /* Establecemos las relaciones entre las tablas */
@@ -55,4 +55,4 @@ sequelize.sync({force: false})
  /* Exportamos los objetos que vamos a necesitar */   
 
  module.exports = {
-    sequelize, Tareas }
+    sequelize, Tarea, User }

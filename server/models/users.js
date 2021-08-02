@@ -15,6 +15,8 @@ module.exports = (sequelize, type) => {
         email: type.STRING,
         username: type.STRING,
         password: type.STRING,
+        rol: type.STRING,
+        foto: type.STRING,
         /* perfil_profesional_id: type.INTEGER, */
         /* perfil_usuario_id: type.INTEGER */
 
